@@ -6,7 +6,7 @@
   "author": {
     "name": "Digital Bazaar, Inc.",
     "email": "support@digitalbazaar.com",
-    "url": "https://digitalbazaar.com/"
+    "url": "https://digitalbazaar.com"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,15 @@
   "files": [
     "lib/**/*.js"
   ],
+  "scripts": {
+    "test": "npm run test-node",
+    "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 10000 test/*.spec.js",
+    "test-karma": "karma start karma.conf.cjs",
+    "coverage": "cross-env NODE_ENV=test c8 npm run test-node",
+    "coverage-ci": "cross-env NODE_ENV=test c8 --reporter=lcovonly --reporter=text-summary --reporter=text npm run test-node",
+    "coverage-report": "c8 report",
+    "lint": "eslint --ext .cjs,.js ."
+  },
   "dependencies": {
     "@digitalbazaar/did-io": "^2.0.0"
   },
@@ -60,14 +69,5 @@
     "Identifier",
     "DID",
     "JWK"
-  ],
-  "scripts": {
-    "test": "npm run test-node",
-    "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 10000 test/*.spec.js",
-    "test-karma": "karma start karma.conf.cjs",
-    "coverage": "cross-env NODE_ENV=test c8 npm run test-node",
-    "coverage-ci": "cross-env NODE_ENV=test c8 --reporter=lcovonly --reporter=text-summary --reporter=text npm run test-node",
-    "coverage-report": "c8 report",
-    "lint": "eslint --ext .cjs,.js ."
-  }
+  ]
 }
