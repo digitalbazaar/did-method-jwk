@@ -23,6 +23,7 @@
     "lib/**/*.js"
   ],
   "scripts": {
+    "postinstall": "npx patch-package",
     "test": "npm run test-node",
     "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 10000 test/*.spec.js",
     "test-karma": "karma start karma.conf.cjs",
@@ -35,7 +36,8 @@
     "@digitalbazaar/did-io": "^2.0.0",
     "@digitalbazaar/x25519-key-agreement-key-2019": "^6.0.0",
     "@digitalbazaar/x25519-key-agreement-key-2020": "^3.0.1",
-    "@or13/did-jwk": "^0.0.4"
+    "@or13/did-jwk": "^0.0.4",
+    "patch-package": "^8.0.0"
   },
   "devDependencies": {
     "c8": "^8.0.1",
