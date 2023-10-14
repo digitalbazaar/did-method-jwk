@@ -1,0 +1,57 @@
+diff --git a/node_modules/@or13/did-jwk/src/index.js b/node_modules/@or13/did-jwk/src/index.js
+index 37bb2c8..13e24c3 100644
+--- a/node_modules/@or13/did-jwk/src/index.js
++++ b/node_modules/@or13/did-jwk/src/index.js
+@@ -182,11 +182,10 @@ const toDidDocument = (jwk) => {
+ };
+ 
+ const resolve = (did) => {
+-  const methodSpecificId = did.split(':').pop().split('#')[0];
+-  const decoded = jose.base64url.decode(methodSpecificId);
+-  const message = new TextDecoder().decode(decoded);
+-  const jwk = JSON.parse(message);
+-  return toDidDocument(jwk);
++  const decoded = jose.base64url.decode(did.split(':').pop().split('#')[0]);
++  const jwk = JSON.parse(decoded.toString());
++  const {publicKeyJwk} = jwk;
++  return toDidDocument(publicKeyJwk);
+ };
+ 
+ const dereference = (didUrl) => {
+@@ -274,13 +273,14 @@ class DIDMethodClient {
+ 
+     this.operations = {
+       create: async (alg, options = {}) => {
+-        const {privateKeyJwk} = await generateKeyPair(alg);
+-        const didDocument = toDidDocument(privateKeyJwk);
+-        return {privateKeyJwk, didDocument};
++        const keyPair = await generateKeyPair(alg);
++        const {publicKeyJwk} = keyPair;
++        const didDocument = toDidDocument(publicKeyJwk);
++        return {keyPair, didDocument};
+       },
+       resolve: async (did) => {
+         return resolve(did);
+-      },
++      }
+     };
+   }
+ }
+@@ -304,7 +304,7 @@ const utils = {
+   verifyFromDid,
+   encryptToDid,
+   calculateJwkThumbprintUri,
+-  calculateJwkThumbprint,
++  calculateJwkThumbprint
+ };
+ 
+ const method = {
+@@ -312,7 +312,7 @@ const method = {
+   create: (config) => {
+     return new DIDMethodClient(config);
+   },
+-  ...utils,
++  ...utils
+ };
+ 
+ module.exports = method;
