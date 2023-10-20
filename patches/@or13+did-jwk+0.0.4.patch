@@ -1,24 +1,32 @@
 diff --git a/node_modules/@or13/did-jwk/src/index.js b/node_modules/@or13/did-jwk/src/index.js
-index 37bb2c8..13e24c3 100644
+index 37bb2c8..4014b88 100644
 --- a/node_modules/@or13/did-jwk/src/index.js
 +++ b/node_modules/@or13/did-jwk/src/index.js
-@@ -182,11 +182,10 @@ const toDidDocument = (jwk) => {
- };
- 
- const resolve = (did) => {
--  const methodSpecificId = did.split(':').pop().split('#')[0];
--  const decoded = jose.base64url.decode(methodSpecificId);
--  const message = new TextDecoder().decode(decoded);
--  const jwk = JSON.parse(message);
--  return toDidDocument(jwk);
-+  const decoded = jose.base64url.decode(did.split(':').pop().split('#')[0]);
-+  const jwk = JSON.parse(decoded.toString());
+@@ -161,10 +161,10 @@ const toDidDocument = (jwk) => {
+   const didDocument = {
+     '@context': [
+       'https://www.w3.org/ns/did/v1',
+-      {'@vocab': 'https://www.iana.org/assignments/jose#'},
++      'https://w3id.org/security/suites/jws-2020/v1'
+     ],
+     'id': did,
+-    'verificationMethod': [vm],
++    'verificationMethod': [vm]
+   };
+   if (signatureAlgorithms.includes(publicKeyJwk.alg)) {
+     signatureVerificationRelationships.forEach((vr) => {
+@@ -186,6 +186,10 @@ const resolve = (did) => {
+   const decoded = jose.base64url.decode(methodSpecificId);
+   const message = new TextDecoder().decode(decoded);
+   const jwk = JSON.parse(message);
 +  const {publicKeyJwk} = jwk;
-+  return toDidDocument(publicKeyJwk);
++  if (publicKeyJwk) {
++    return toDidDocument(publicKeyJwk);
++  }
+   return toDidDocument(jwk);
  };
  
- const dereference = (didUrl) => {
-@@ -274,13 +273,14 @@ class DIDMethodClient {
+@@ -274,13 +278,14 @@ class DIDMethodClient {
  
      this.operations = {
        create: async (alg, options = {}) => {
@@ -37,7 +45,7 @@ index 37bb2c8..13e24c3 100644
      };
    }
  }
-@@ -304,7 +304,7 @@ const utils = {
+@@ -304,7 +309,7 @@ const utils = {
    verifyFromDid,
    encryptToDid,
    calculateJwkThumbprintUri,
@@ -46,7 +54,7 @@ index 37bb2c8..13e24c3 100644
  };
  
  const method = {
-@@ -312,7 +312,7 @@ const method = {
+@@ -312,7 +317,7 @@ const method = {
    create: (config) => {
      return new DIDMethodClient(config);
    },
