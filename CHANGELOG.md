@@ -1,6 +1,6 @@
 # did-method-jwk ChangeLog
 
-## 1.0.0 - 2024-xx-xx
+## 1.0.0 - 2024-01-17
 
 ### Changed
 - Initial release.
