@@ -20,7 +20,8 @@
   "type": "module",
   "exports": "./lib/index.js",
   "files": [
-    "lib/**/*.js"
+    "lib/**/*.js",
+    "patches/**/*.patch"
   ],
   "scripts": {
     "postinstall": "npx patch-package",
