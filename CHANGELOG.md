@@ -1,6 +1,6 @@
 # did-method-jwk ChangeLog
 
-## 1.0.1 - 2024-01-xx
+## 1.0.1 - 2024-01-18
 
 ### Changed
 - Removed patch.
