@@ -1,6 +1,6 @@
 {
   "name": "@digitalbazaar/did-method-jwk",
-  "version": "1.0.1",
+  "version": "1.0.2-0",
   "description": "A did:jwk method resolver.",
   "homepage": "https://github.com/digitalbazaar/did-method-jwk",
   "author": {
