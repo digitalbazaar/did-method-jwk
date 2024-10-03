@@ -1,6 +1,6 @@
 # did-method-jwk ChangeLog
 
-## 2.0.0 - 2024-10-dd
+## 2.0.0 - 2024-10-02
 
 ### Added
 - Add support for using newer `JsonWebKey` verification method
